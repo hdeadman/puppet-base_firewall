@@ -12,9 +12,9 @@
 #
 # Andrew Kroh
 #
-class base_firewall::logging () {
+class base_firewall::logging ($manage_syslog_service = true) {
 
-  if !defined(Service['rsyslog']) {
+  if $manage_syslog_service and !defined(Service['rsyslog']) {
       service { 'rsyslog':
         hasrestart => true,
         hasstatus  => true,
