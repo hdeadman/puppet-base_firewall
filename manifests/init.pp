@@ -107,10 +107,6 @@ class base_firewall (
   validate_bool($allow_new_outgoing_ipv4)
   validate_bool($allow_new_outgoing_ipv6)
 
-  if $rules {
-    validate_hash($rules)
-  }
-
   if !is_integer($sshd_port) or $sshd_port < 1 or $sshd_port > 65535 {
     fail('sshd_port must be an integer between [1, 65535].')
   }
