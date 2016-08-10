@@ -14,6 +14,8 @@
 #
 class base_firewall::logging ($manage_syslog_service = true) {
 
+  $notifyService = defined(Service['rsyslog']) ? { true => Service['rsyslog'], default => [] }
+  
   if $manage_syslog_service and !defined(Service['rsyslog']) {
       service { 'rsyslog':
         hasrestart => true,
@@ -27,7 +29,7 @@ class base_firewall::logging ($manage_syslog_service = true) {
     mode   => '0755',
     owner  => 'root',
     group  => 'root',
-    notify => Service['rsyslog'],
+    notify => $notifyService,
   }
 
   file { '/etc/logrotate.d/iptables':
